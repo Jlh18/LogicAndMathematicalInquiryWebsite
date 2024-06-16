@@ -188,6 +188,7 @@ Suppose <code class="docutils literal notranslate"><span class="pre">A</span></c
 and, assuming <code class="docutils literal notranslate"><span class="pre">hA</span></code> is the premise that <code class="docutils literal notranslate"><span class="pre">A</span></code> holds,
 <code class="docutils literal notranslate"><span class="pre">hB</span></code> is proof of <code class="docutils literal notranslate"><span class="pre">B</span></code>, possibly involving <code class="docutils literal notranslate"><span class="pre">hA</span></code>.
 Then the expression <code class="docutils literal notranslate"><span class="pre">fun</span> <span class="pre">h</span> <span class="pre">:</span> <span class="pre">A</span> <span class="pre">&#8614;</span> <span class="pre">hB</span></code> is a proof of <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">&#8594;</span> <span class="pre">B</span></code>.
+You can type <code class="docutils literal notranslate"><span class="pre">\mapsto</span></code> for the <code class="docutils literal notranslate"><span class="pre">&#8614;</span></code> symbol.
 For example, we can construct a proof of <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">&#8594;</span> <span class="pre">A</span> <span class="pre">&#8743;</span> <span class="pre">A</span></code> as follows:</p>
 <div style="position: relative">
 <div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=section%0Avariable%20(A%20%3A%20Prop)%0A%0A%23check%20(fun%20h%20%3A%20A%20%E2%86%A6%20And.intro%20h%20h)%0Aend" target="_blank">
@@ -1071,7 +1072,7 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 </div></div>
 <div class="section" id="exercises">
 <h2><span class="section-number">4.8. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">&#182;</a></h2>
-<p>Prove the following in Lean in both term mode and tactic mode:</p>
+<p>Prove the following in both term mode and tactic mode:</p>
 <div style="position: relative">
 <div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=section%0Avariable%20(A%20B%20C%20D%20%3A%20Prop)%0A%0Aexample%20%3A%20A%20%E2%88%A7%20(A%20%E2%86%92%20B)%20%E2%86%92%20B%20%3A%3D%0Asorry%0A%0Aexample%20%3A%20A%20%E2%86%92%20%C2%AC%20(%C2%AC%20A%20%E2%88%A7%20B)%20%3A%3D%0Asorry%0A%0Aexample%20%3A%20%C2%AC%20(A%20%E2%88%A7%20B)%20%E2%86%92%20(A%20%E2%86%92%20%C2%AC%20B)%20%3A%3D%0Asorry%0A%0Aexample%20(h%E2%82%81%20%3A%20A%20%E2%88%A8%20B)%20(h%E2%82%82%20%3A%20A%20%E2%86%92%20C)%20(h%E2%82%83%20%3A%20B%20%E2%86%92%20D)%20%3A%20C%20%E2%88%A8%20D%20%3A%3D%0Asorry%0A%0Aexample%20(h%20%3A%20%C2%AC%20A%20%E2%88%A7%20%C2%AC%20B)%20%3A%20%C2%AC%20(A%20%E2%88%A8%20B)%20%3A%3D%0Asorry%0A%0Aexample%20%3A%20%C2%AC%20(A%20%E2%86%94%20%C2%AC%20A)%20%3A%3D%0Asorry%0A%0Aend" target="_blank">
 try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kn">section</span>
