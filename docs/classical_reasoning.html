@@ -5,7 +5,7 @@
   <head>
     <meta charset="ascii" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>5. Classical Reasoning &#8212; Logic and Proof 3.18.4 documentation</title>
+    <title>5. Classical Reasoning &#8212; Logic and Mathematical Inquiry 3.18.4 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -43,7 +43,7 @@
 <img src="_static/classical_reasoning.1.png"><p>The assumption <span class="math notranslate nohighlight">\(\neg A\)</span> is canceled at the final inference.</p>
 <p>In Lean, the inference is named <code class="docutils literal notranslate"><span class="pre">by_contradiction</span></code>, and since it is a classical rule, we have to use the command <code class="docutils literal notranslate"><span class="pre">open</span> <span class="pre">classical</span></code> before it is available. Once we do so, the pattern of inference is expressed as follows:</p>
 <div style="position: relative">
-<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover-community.github.io/lean-web-editor/#code=open%20classical%0A%0Avariable%20(A%20%3A%20Prop)%0A%0Aexample%20%3A%20A%20%3A%3D%0Aby_contradiction%0A%20%20(assume%20h%20%3A%20%C2%AC%20A%2C%0A%20%20%20%20show%20false%2C%20from%20sorry)" target="_blank">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=open%20classical%0A%0Avariable%20(A%20%3A%20Prop)%0A%0Aexample%20%3A%20A%20%3A%3D%0Aby_contradiction%0A%20%20(assume%20h%20%3A%20%C2%AC%20A%2C%0A%20%20%20%20show%20false%2C%20from%20sorry)" target="_blank">
 try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kn">open</span> <span class="n">classical</span>
 
 <span class="kd">variable</span> <span class="o">(</span><span class="n">A</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span>
@@ -58,7 +58,7 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 <p>Here is a proof of <code class="docutils literal notranslate"><span class="pre">em</span></code>, in natural deduction, using proof by contradiction:</p>
 <img src="_static/classical_reasoning.3.png"><p>Here is the same proof rendered in Lean:</p>
 <div style="position: relative">
-<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover-community.github.io/lean-web-editor/#code=open%20classical%0A%0Avariable%20(A%20%3A%20Prop)%0A%0Aexample%20%3A%20A%20%E2%88%A8%20%C2%AC%20A%20%3A%3D%0Aby_contradiction%0A%20%20(assume%20h1%20%3A%20%C2%AC%20(A%20%E2%88%A8%20%C2%AC%20A)%2C%0A%20%20%20%20have%20h2%20%3A%20%C2%AC%20A%2C%20from%0A%20%20%20%20%20%20assume%20h3%20%3A%20A%2C%0A%20%20%20%20%20%20have%20h4%20%3A%20A%20%E2%88%A8%20%C2%AC%20A%2C%20from%20or.inl%20h3%2C%0A%20%20%20%20%20%20show%20false%2C%20from%20h1%20h4%2C%0A%20%20%20%20have%20h5%20%3A%20A%20%E2%88%A8%20%C2%AC%20A%2C%20from%20or.inr%20h2%2C%0A%20%20%20%20show%20false%2C%20from%20h1%20h5)" target="_blank">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=open%20classical%0A%0Avariable%20(A%20%3A%20Prop)%0A%0Aexample%20%3A%20A%20%E2%88%A8%20%C2%AC%20A%20%3A%3D%0Aby_contradiction%0A%20%20(assume%20h1%20%3A%20%C2%AC%20(A%20%E2%88%A8%20%C2%AC%20A)%2C%0A%20%20%20%20have%20h2%20%3A%20%C2%AC%20A%2C%20from%0A%20%20%20%20%20%20assume%20h3%20%3A%20A%2C%0A%20%20%20%20%20%20have%20h4%20%3A%20A%20%E2%88%A8%20%C2%AC%20A%2C%20from%20or.inl%20h3%2C%0A%20%20%20%20%20%20show%20false%2C%20from%20h1%20h4%2C%0A%20%20%20%20have%20h5%20%3A%20A%20%E2%88%A8%20%C2%AC%20A%2C%20from%20or.inr%20h2%2C%0A%20%20%20%20show%20false%2C%20from%20h1%20h5)" target="_blank">
 try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kn">open</span> <span class="n">classical</span>
 
 <span class="kd">variable</span> <span class="o">(</span><span class="n">A</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span>
@@ -76,7 +76,7 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 </div>
 </div><p>The principle is known as the law of the excluded middle because it says that a proposition <code class="docutils literal notranslate"><span class="pre">A</span></code> is either true or false; there is no middle ground. As a result, the theorem is named <code class="docutils literal notranslate"><span class="pre">em</span></code> in the Lean library. For any proposition <code class="docutils literal notranslate"><span class="pre">A</span></code>, <code class="docutils literal notranslate"><span class="pre">em</span> <span class="pre">A</span></code> denotes a proof of <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">&#8744;</span> <span class="pre">&#172;</span> <span class="pre">A</span></code>, and you are free to use it any time <code class="docutils literal notranslate"><span class="pre">classical</span></code> is open:</p>
 <div style="position: relative">
-<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover-community.github.io/lean-web-editor/#code=open%20classical%0A%0Aexample%20(A%20%3A%20Prop)%20%3A%20A%20%E2%88%A8%20%C2%AC%20A%20%3A%3D%0Aor.elim%20(em%20A)%0A%20%20(assume%20%3A%20A%2C%20or.inl%20this)%0A%20%20(assume%20%3A%20%C2%AC%20A%2C%20or.inr%20this)" target="_blank">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=open%20classical%0A%0Aexample%20(A%20%3A%20Prop)%20%3A%20A%20%E2%88%A8%20%C2%AC%20A%20%3A%3D%0Aor.elim%20(em%20A)%0A%20%20(assume%20%3A%20A%2C%20or.inl%20this)%0A%20%20(assume%20%3A%20%C2%AC%20A%2C%20or.inr%20this)" target="_blank">
 try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kn">open</span> <span class="n">classical</span>
 
 <span class="kd">example</span> <span class="o">(</span><span class="n">A</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span> <span class="o">:</span> <span class="n">A</span> <span class="bp">&#8744;</span> <span class="bp">&#172;</span> <span class="n">A</span> <span class="o">:=</span>
@@ -87,7 +87,7 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 </div>
 </div><p>Or even more simply:</p>
 <div style="position: relative">
-<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover-community.github.io/lean-web-editor/#code=open%20classical%0A%0Aexample%20(A%20%3A%20Prop)%20%3A%20A%20%E2%88%A8%20%C2%AC%20A%20%3A%3D%0Aem%20A" target="_blank">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=open%20classical%0A%0Aexample%20(A%20%3A%20Prop)%20%3A%20A%20%E2%88%A8%20%C2%AC%20A%20%3A%3D%0Aem%20A" target="_blank">
 try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kn">open</span> <span class="n">classical</span>
 
 <span class="kd">example</span> <span class="o">(</span><span class="n">A</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span> <span class="o">:</span> <span class="n">A</span> <span class="bp">&#8744;</span> <span class="bp">&#172;</span> <span class="n">A</span> <span class="o">:=</span>
@@ -98,7 +98,7 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 <p>Proof by contradiction is also equivalent to the principle <span class="math notranslate nohighlight">\(\neg \neg A \leftrightarrow A\)</span>. The implication from right to left holds intuitionistically; the other implication is classical, and is known as <em>double-negation elimination</em>. Here is a proof in natural deduction:</p>
 <img src="_static/classical_reasoning.4.png"><p>And here is the corresponding proof in Lean:</p>
 <div style="position: relative">
-<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover-community.github.io/lean-web-editor/#code=open%20classical%0A%0Aexample%20(A%20%3A%20Prop)%20%3A%20%C2%AC%20%C2%AC%20A%20%E2%86%94%20A%20%3A%3D%0Aiff.intro%0A%20%20(assume%20h1%20%3A%20%C2%AC%20%C2%AC%20A%2C%0A%20%20%20%20show%20A%2C%20from%20by_contradiction%0A%20%20%20%20%20%20(assume%20h2%20%3A%20%C2%AC%20A%2C%0A%20%20%20%20%20%20%20%20show%20false%2C%20from%20h1%20h2))%0A%20%20(assume%20h1%20%3A%20A%2C%0A%20%20%20%20show%20%C2%AC%20%C2%AC%20A%2C%20from%20assume%20h2%20%3A%20%C2%AC%20A%2C%20h2%20h1)" target="_blank">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=open%20classical%0A%0Aexample%20(A%20%3A%20Prop)%20%3A%20%C2%AC%20%C2%AC%20A%20%E2%86%94%20A%20%3A%3D%0Aiff.intro%0A%20%20(assume%20h1%20%3A%20%C2%AC%20%C2%AC%20A%2C%0A%20%20%20%20show%20A%2C%20from%20by_contradiction%0A%20%20%20%20%20%20(assume%20h2%20%3A%20%C2%AC%20A%2C%0A%20%20%20%20%20%20%20%20show%20false%2C%20from%20h1%20h2))%0A%20%20(assume%20h1%20%3A%20A%2C%0A%20%20%20%20show%20%C2%AC%20%C2%AC%20A%2C%20from%20assume%20h2%20%3A%20%C2%AC%20A%2C%20h2%20h1)" target="_blank">
 try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kn">open</span> <span class="n">classical</span>
 
 <span class="kd">example</span> <span class="o">(</span><span class="n">A</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span> <span class="o">:</span> <span class="bp">&#172;</span> <span class="bp">&#172;</span> <span class="n">A</span> <span class="bp">&#8596;</span> <span class="n">A</span> <span class="o">:=</span>
@@ -126,7 +126,7 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 <img src="_static/classical_reasoning.5.png"><p>Here is another example. Intuitively, asserting &#8220;if A then B&#8221; is equivalent to saying that it cannot be the case that A is true and B is false. Classical reasoning is needed to get us from the second statement to the first.</p>
 <img src="_static/classical_reasoning.6.png"><p>Here are the same proofs, rendered in Lean:</p>
 <div style="position: relative">
-<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover-community.github.io/lean-web-editor/#code=open%20classical%0A%0Avariables%20(A%20B%20%3A%20Prop)%0A%0Aexample%20(h%20%3A%20%C2%AC%20B%20%E2%86%92%20%C2%AC%20A)%20%3A%20A%20%E2%86%92%20B%20%3A%3D%0Aassume%20h1%20%3A%20A%2C%0Ashow%20B%2C%20from%0A%20%20by_contradiction%0A%20%20%20%20(assume%20h2%20%3A%20%C2%AC%20B%2C%0A%20%20%20%20%20%20have%20h3%20%3A%20%C2%AC%20A%2C%20from%20h%20h2%2C%0A%20%20%20%20%20%20show%20false%2C%20from%20h3%20h1)%0A%0Aexample%20(h%20%3A%20%C2%AC%20(A%20%E2%88%A7%20%C2%AC%20B))%20%3A%20A%20%E2%86%92%20B%20%3A%3D%0Aassume%20%3A%20A%2C%0Ashow%20B%2C%20from%0A%20%20by_contradiction%0A%20%20%20%20(assume%20%3A%20%C2%AC%20B%2C%0A%20%20%20%20%20%20have%20A%20%E2%88%A7%20%C2%AC%20B%2C%20from%20and.intro%20%E2%80%B9A%E2%80%BA%20this%2C%0A%20%20%20%20%20%20show%20false%2C%20from%20h%20this)" target="_blank">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=open%20classical%0A%0Avariables%20(A%20B%20%3A%20Prop)%0A%0Aexample%20(h%20%3A%20%C2%AC%20B%20%E2%86%92%20%C2%AC%20A)%20%3A%20A%20%E2%86%92%20B%20%3A%3D%0Aassume%20h1%20%3A%20A%2C%0Ashow%20B%2C%20from%0A%20%20by_contradiction%0A%20%20%20%20(assume%20h2%20%3A%20%C2%AC%20B%2C%0A%20%20%20%20%20%20have%20h3%20%3A%20%C2%AC%20A%2C%20from%20h%20h2%2C%0A%20%20%20%20%20%20show%20false%2C%20from%20h3%20h1)%0A%0Aexample%20(h%20%3A%20%C2%AC%20(A%20%E2%88%A7%20%C2%AC%20B))%20%3A%20A%20%E2%86%92%20B%20%3A%3D%0Aassume%20%3A%20A%2C%0Ashow%20B%2C%20from%0A%20%20by_contradiction%0A%20%20%20%20(assume%20%3A%20%C2%AC%20B%2C%0A%20%20%20%20%20%20have%20A%20%E2%88%A7%20%C2%AC%20B%2C%20from%20and.intro%20%E2%80%B9A%E2%80%BA%20this%2C%0A%20%20%20%20%20%20show%20false%2C%20from%20h%20this)" target="_blank">
 try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kn">open</span> <span class="n">classical</span>
 
 <span class="kd">variables</span> <span class="o">(</span><span class="n">A</span> <span class="n">B</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span>
@@ -152,7 +152,7 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 <p>Knowing that we can prove the law of the excluded middle, it is convenient to use it in classical proofs. Here is an example, with a proof of <span class="math notranslate nohighlight">\((A \to B) \vee (B \to A)\)</span>:</p>
 <img src="_static/classical_reasoning.6bis.png"><p>Here is the corresponding proof in Lean:</p>
 <div style="position: relative">
-<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover-community.github.io/lean-web-editor/#code=open%20classical%0A%0Avariables%20(A%20B%20%3A%20Prop)%0A%0Aexample%20%3A%20(A%20%E2%86%92%20B)%20%E2%88%A8%20(B%20%E2%86%92%20A)%20%3A%3D%0Aor.elim%20(em%20B)%0A%20%20(assume%20h%20%3A%20B%2C%0A%20%20%20%20have%20A%20%E2%86%92%20B%2C%20from%0A%20%20%20%20%20%20assume%20%3A%20A%2C%0A%20%20%20%20%20%20show%20B%2C%20from%20h%2C%0A%20%20%20%20show%20(A%20%E2%86%92%20B)%20%E2%88%A8%20(B%20%E2%86%92%20A)%2C%0A%20%20%20%20%20%20from%20or.inl%20this)%0A%20%20(assume%20h%20%3A%20%C2%AC%20B%2C%0A%20%20%20%20have%20B%20%E2%86%92%20A%2C%20from%0A%20%20%20%20%20%20assume%20%3A%20B%2C%0A%20%20%20%20%20%20have%20false%2C%20from%20h%20this%2C%0A%20%20%20%20%20%20show%20A%2C%20from%20false.elim%20this%2C%0A%20%20%20%20show%20(A%20%E2%86%92%20B)%20%E2%88%A8%20(B%20%E2%86%92%20A)%2C%0A%20%20%20%20%20%20from%20or.inr%20this)" target="_blank">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=open%20classical%0A%0Avariables%20(A%20B%20%3A%20Prop)%0A%0Aexample%20%3A%20(A%20%E2%86%92%20B)%20%E2%88%A8%20(B%20%E2%86%92%20A)%20%3A%3D%0Aor.elim%20(em%20B)%0A%20%20(assume%20h%20%3A%20B%2C%0A%20%20%20%20have%20A%20%E2%86%92%20B%2C%20from%0A%20%20%20%20%20%20assume%20%3A%20A%2C%0A%20%20%20%20%20%20show%20B%2C%20from%20h%2C%0A%20%20%20%20show%20(A%20%E2%86%92%20B)%20%E2%88%A8%20(B%20%E2%86%92%20A)%2C%0A%20%20%20%20%20%20from%20or.inl%20this)%0A%20%20(assume%20h%20%3A%20%C2%AC%20B%2C%0A%20%20%20%20have%20B%20%E2%86%92%20A%2C%20from%0A%20%20%20%20%20%20assume%20%3A%20B%2C%0A%20%20%20%20%20%20have%20false%2C%20from%20h%20this%2C%0A%20%20%20%20%20%20show%20A%2C%20from%20false.elim%20this%2C%0A%20%20%20%20show%20(A%20%E2%86%92%20B)%20%E2%88%A8%20(B%20%E2%86%92%20A)%2C%0A%20%20%20%20%20%20from%20or.inr%20this)" target="_blank">
 try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kn">open</span> <span class="n">classical</span>
 
 <span class="kd">variables</span> <span class="o">(</span><span class="n">A</span> <span class="n">B</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span>
@@ -207,7 +207,7 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 <li><p>Put <span class="math notranslate nohighlight">\((A \vee B) \wedge (C \vee D) \wedge (E \vee F)\)</span> in disjunctive normal form, that is, write it as a big &#8220;or&#8221; of multiple &#8220;and&#8221; expressions.</p></li>
 <li><p>Prove <code class="docutils literal notranslate"><span class="pre">&#172;</span> <span class="pre">(A</span> <span class="pre">&#8743;</span> <span class="pre">B)</span> <span class="pre">&#8594;</span> <span class="pre">&#172;</span> <span class="pre">A</span> <span class="pre">&#8744;</span> <span class="pre">&#172;</span> <span class="pre">B</span></code> by replacing the sorry&#8217;s below by proofs.</p>
 <div style="position: relative">
-<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover-community.github.io/lean-web-editor/#code=open%20classical%0Avariables%20%7BA%20B%20C%20%3A%20Prop%7D%0A%0A--%20Prove%20%C2%AC%20(A%20%E2%88%A7%20B)%20%E2%86%92%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%20by%20replacing%20the%20sorry's%20below%0A--%20by%20proofs.%0A%0Alemma%20step1%20(h%E2%82%81%20%3A%20%C2%AC%20(A%20%E2%88%A7%20B))%20(h%E2%82%82%20%3A%20A)%20%3A%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%20%3A%3D%0Ahave%20%C2%AC%20B%2C%20from%20sorry%2C%0Ashow%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%2C%20from%20or.inr%20this%0A%0Alemma%20step2%20(h%E2%82%81%20%3A%20%C2%AC%20(A%20%E2%88%A7%20B))%20(h%E2%82%82%20%3A%20%C2%AC%20(%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B))%20%3A%20false%20%3A%3D%0Ahave%20%C2%AC%20A%2C%20from%0A%20%20assume%20%3A%20A%2C%0A%20%20have%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%2C%20from%20step1%20h%E2%82%81%20%E2%80%B9A%E2%80%BA%2C%0A%20%20show%20false%2C%20from%20h%E2%82%82%20this%2C%0Ashow%20false%2C%20from%20sorry%0A%0Atheorem%20step3%20(h%20%3A%20%C2%AC%20(A%20%E2%88%A7%20B))%20%3A%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%20%3A%3D%0Aby_contradiction%0A%20%20(assume%20h'%20%3A%20%C2%AC%20(%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B)%2C%0A%20%20%20%20show%20false%2C%20from%20step2%20h%20h')" target="_blank">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=open%20classical%0Avariables%20%7BA%20B%20C%20%3A%20Prop%7D%0A%0A--%20Prove%20%C2%AC%20(A%20%E2%88%A7%20B)%20%E2%86%92%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%20by%20replacing%20the%20sorry's%20below%0A--%20by%20proofs.%0A%0Alemma%20step1%20(h%E2%82%81%20%3A%20%C2%AC%20(A%20%E2%88%A7%20B))%20(h%E2%82%82%20%3A%20A)%20%3A%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%20%3A%3D%0Ahave%20%C2%AC%20B%2C%20from%20sorry%2C%0Ashow%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%2C%20from%20or.inr%20this%0A%0Alemma%20step2%20(h%E2%82%81%20%3A%20%C2%AC%20(A%20%E2%88%A7%20B))%20(h%E2%82%82%20%3A%20%C2%AC%20(%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B))%20%3A%20false%20%3A%3D%0Ahave%20%C2%AC%20A%2C%20from%0A%20%20assume%20%3A%20A%2C%0A%20%20have%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%2C%20from%20step1%20h%E2%82%81%20%E2%80%B9A%E2%80%BA%2C%0A%20%20show%20false%2C%20from%20h%E2%82%82%20this%2C%0Ashow%20false%2C%20from%20sorry%0A%0Atheorem%20step3%20(h%20%3A%20%C2%AC%20(A%20%E2%88%A7%20B))%20%3A%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%20%3A%3D%0Aby_contradiction%0A%20%20(assume%20h'%20%3A%20%C2%AC%20(%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B)%2C%0A%20%20%20%20show%20false%2C%20from%20step2%20h%20h')" target="_blank">
 try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kn">open</span> <span class="n">classical</span>
 <span class="kd">variables</span> <span class="o">{</span><span class="n">A</span> <span class="n">B</span> <span class="n">C</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">}</span>
 
@@ -234,7 +234,7 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 </div></li>
 <li><p>Also do these:</p>
 <div style="position: relative">
-<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover-community.github.io/lean-web-editor/#code=open%20classical%0Avariables%20%7BA%20B%20C%20%3A%20Prop%7D%0A%0Aexample%20(h%20%3A%20%C2%AC%20B%20%E2%86%92%20%C2%AC%20A)%20%3A%20A%20%E2%86%92%20B%20%3A%3D%0Asorry%0A%0Aexample%20(h%20%3A%20A%20%E2%86%92%20B)%20%3A%20%C2%AC%20A%20%E2%88%A8%20B%20%3A%3D%0Asorry" target="_blank">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=open%20classical%0Avariables%20%7BA%20B%20C%20%3A%20Prop%7D%0A%0Aexample%20(h%20%3A%20%C2%AC%20B%20%E2%86%92%20%C2%AC%20A)%20%3A%20A%20%E2%86%92%20B%20%3A%3D%0Asorry%0A%0Aexample%20(h%20%3A%20A%20%E2%86%92%20B)%20%3A%20%C2%AC%20A%20%E2%88%A8%20B%20%3A%3D%0Asorry" target="_blank">
 try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kn">open</span> <span class="n">classical</span>
 <span class="kd">variables</span> <span class="o">{</span><span class="n">A</span> <span class="n">B</span> <span class="n">C</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">}</span>
 
@@ -257,7 +257,7 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">Logic and Proof</a></h1>
+<h1 class="logo"><a href="index.html">Logic and Mathematical Inquiry</a></h1>
 
 
 
@@ -303,7 +303,7 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 <hr />
 <ul>
     
-    <li class="toctree-l1"><a href="logic_and_proof.pdf">PDF version</a></li>
+    <li class="toctree-l1"><a href="logic_and_mathematical_inquiry.pdf">PDF version</a></li>
     
     <li class="toctree-l1"><a href="https://leanprover.github.io/">Lean Home</a></li>
     

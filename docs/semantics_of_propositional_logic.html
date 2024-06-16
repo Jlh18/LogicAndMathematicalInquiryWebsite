@@ -5,7 +5,7 @@
   <head>
     <meta charset="ascii" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>6. Semantics of Propositional Logic &#8212; Logic and Proof 3.18.4 documentation</title>
+    <title>6. Semantics of Propositional Logic &#8212; Logic and Mathematical Inquiry 3.18.4 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -97,7 +97,7 @@
 <p>Let us motivate the semantics for material implication another way, using the deductive rules described in the last chapter. Notice that, if <span class="math notranslate nohighlight">\(B\)</span> is true, we can prove <span class="math notranslate nohighlight">\(A \to B\)</span> without any assumptions about <span class="math notranslate nohighlight">\(A\)</span>:</p>
 <img src="_static/semantics_of_propositional_logic.1.png"><p>This follows from the proper reading of the implication introduction rule: given <span class="math notranslate nohighlight">\(B\)</span>, one can always infer <span class="math notranslate nohighlight">\(A \to B\)</span>, and then cancel an assumption <span class="math notranslate nohighlight">\(A\)</span>, <em>if there is one</em>. If <span class="math notranslate nohighlight">\(A\)</span> was never used in the proof, the conclusion is simply weaker than it needs to be. This inference is validated in Lean:</p>
 <div style="position: relative">
-<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover-community.github.io/lean-web-editor/#code=variables%20A%20B%20%3A%20Prop%0Avariable%20hB%20%3A%20B%0A%0Aexample%20%3A%20A%20%E2%86%92%20B%20%3A%3D%0Aassume%20hA%20%3A%20A%2C%0A%20%20show%20B%2C%20from%20hB" target="_blank">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=variables%20A%20B%20%3A%20Prop%0Avariable%20hB%20%3A%20B%0A%0Aexample%20%3A%20A%20%E2%86%92%20B%20%3A%3D%0Aassume%20hA%20%3A%20A%2C%0A%20%20show%20B%2C%20from%20hB" target="_blank">
 try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">variables</span> <span class="n">A</span> <span class="n">B</span> <span class="o">:</span> <span class="kt">Prop</span>
 <span class="kd">variable</span> <span class="n">hB</span> <span class="o">:</span> <span class="n">B</span>
 
@@ -109,7 +109,7 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 </div><p>Similarly, if <span class="math notranslate nohighlight">\(A\)</span> is false, we can prove <span class="math notranslate nohighlight">\(A \to B\)</span> without any assumptions about <span class="math notranslate nohighlight">\(B\)</span>:</p>
 <img src="_static/semantics_of_propositional_logic.2.png"><p>In Lean:</p>
 <div style="position: relative">
-<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover-community.github.io/lean-web-editor/#code=variables%20A%20B%20%3A%20Prop%0Avariable%20hnA%20%3A%20%C2%AC%20A%0A%0Aexample%20%3A%20A%20%E2%86%92%20B%20%3A%3D%0Aassume%20hA%20%3A%20A%2C%0A%20%20show%20B%2C%20from%20false.elim%20(hnA%20hA)" target="_blank">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=variables%20A%20B%20%3A%20Prop%0Avariable%20hnA%20%3A%20%C2%AC%20A%0A%0Aexample%20%3A%20A%20%E2%86%92%20B%20%3A%3D%0Aassume%20hA%20%3A%20A%2C%0A%20%20show%20B%2C%20from%20false.elim%20(hnA%20hA)" target="_blank">
 try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">variables</span> <span class="n">A</span> <span class="n">B</span> <span class="o">:</span> <span class="kt">Prop</span>
 <span class="kd">variable</span> <span class="n">hnA</span> <span class="o">:</span> <span class="bp">&#172;</span> <span class="n">A</span>
 
@@ -121,7 +121,7 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 </div><p>Finally, if <span class="math notranslate nohighlight">\(A\)</span> is true and <span class="math notranslate nohighlight">\(B\)</span> is false, we can prove <span class="math notranslate nohighlight">\(\neg (A \to B)\)</span>:</p>
 <img src="_static/semantics_of_propositional_logic.3.png"><p>Once again, in Lean:</p>
 <div style="position: relative">
-<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover-community.github.io/lean-web-editor/#code=variables%20A%20B%20%3A%20Prop%0Avariable%20hA%20%3A%20A%0Avariable%20hnB%20%3A%20%C2%ACB%0A%0Aexample%20%3A%20%C2%AC%20(A%20%E2%86%92%20B)%20%3A%3D%0Aassume%20h%20%3A%20A%20%E2%86%92%20B%2C%0Ahave%20hB%20%3A%20B%2C%20from%20h%20hA%2C%0Ashow%20false%2C%20from%20hnB%20hB" target="_blank">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=variables%20A%20B%20%3A%20Prop%0Avariable%20hA%20%3A%20A%0Avariable%20hnB%20%3A%20%C2%ACB%0A%0Aexample%20%3A%20%C2%AC%20(A%20%E2%86%92%20B)%20%3A%3D%0Aassume%20h%20%3A%20A%20%E2%86%92%20B%2C%0Ahave%20hB%20%3A%20B%2C%20from%20h%20hA%2C%0Ashow%20false%2C%20from%20hnB%20hB" target="_blank">
 try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">variables</span> <span class="n">A</span> <span class="n">B</span> <span class="o">:</span> <span class="kt">Prop</span>
 <span class="kd">variable</span> <span class="n">hA</span> <span class="o">:</span> <span class="n">A</span>
 <span class="kd">variable</span> <span class="n">hnB</span> <span class="o">:</span> <span class="bp">&#172;</span><span class="n">B</span>
@@ -135,7 +135,7 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 </div><p>Now that we have defined the truth of any formula relative to a truth assignment, we can answer our first semantic question: given an assignment <span class="math notranslate nohighlight">\(v\)</span> of truth values to the propositional variables occurring in some formula <span class="math notranslate nohighlight">\(\varphi\)</span>, how do we determine whether or not <span class="math notranslate nohighlight">\(\varphi\)</span> is true? This amounts to evaluating <span class="math notranslate nohighlight">\(\bar v(\varphi)\)</span>, and the recursive definition of <span class="math notranslate nohighlight">\(\varphi\)</span> gives a recipe: we evaluate the expressions occurring in <span class="math notranslate nohighlight">\(\varphi\)</span> from the bottom up, starting with the propositional variables, and using the evaluation of an expression&#8217;s components to evaluate the expression itself. For example, suppose our truth assignment <span class="math notranslate nohighlight">\(v\)</span> makes <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> true and <span class="math notranslate nohighlight">\(C\)</span> false. To evaluate <span class="math notranslate nohighlight">\((B \to C) \vee (A \wedge B)\)</span> under <span class="math notranslate nohighlight">\(v\)</span>, note that the expression <span class="math notranslate nohighlight">\(B \to C\)</span> comes out false and the expression <span class="math notranslate nohighlight">\(A \wedge B\)</span> comes out true. Since a disjunction &#8220;false or true&#8221; is true, the entire formula is true.</p>
 <p>We can also go in the other direction: given a formula, we can attempt to find a truth assignment that will make it true (or false). In fact, we can use Lean to evaluate formulas for us. In the example that follows, you can assign any set of values to the proposition symbols <code class="docutils literal notranslate"><span class="pre">A</span></code>, <code class="docutils literal notranslate"><span class="pre">B</span></code>, <code class="docutils literal notranslate"><span class="pre">C</span></code>, <code class="docutils literal notranslate"><span class="pre">D</span></code>, and <code class="docutils literal notranslate"><span class="pre">E</span></code>. When you run Lean on this input, the output of the <code class="docutils literal notranslate"><span class="pre">eval</span></code> statement is the value of the expression.</p>
 <div style="position: relative">
-<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover-community.github.io/lean-web-editor/#code=--%20Define%20your%20truth%20assignment%20here%0Adef%20A%20%3A%3D%20tt%0Adef%20B%20%3A%3D%20ff%0Adef%20C%20%3A%3D%20tt%0Adef%20D%20%3A%3D%20tt%0Adef%20E%20%3A%3D%20ff%0A%0Adef%20test%20(p%20%3A%20Prop)%20%5Bdecidable%20p%5D%20%3A%20string%20%3A%3D%0Aif%20p%20then%20%22true%22%20else%20%22false%22%0A%0A%23eval%20test%20((A%20%E2%88%A7%20B)%20%E2%88%A8%20%C2%AC%20C)%0A%23eval%20test%20(A%20%E2%86%92%20D)%0A%23eval%20test%20(C%20%E2%86%92%20(D%20%E2%88%A8%20%C2%ACE))%0A%23eval%20test%20(%C2%AC(A%20%E2%88%A7%20B%20%E2%88%A7%20C%20%E2%88%A7%20D))" target="_blank">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=--%20Define%20your%20truth%20assignment%20here%0Adef%20A%20%3A%3D%20tt%0Adef%20B%20%3A%3D%20ff%0Adef%20C%20%3A%3D%20tt%0Adef%20D%20%3A%3D%20tt%0Adef%20E%20%3A%3D%20ff%0A%0Adef%20test%20(p%20%3A%20Prop)%20%5Bdecidable%20p%5D%20%3A%20string%20%3A%3D%0Aif%20p%20then%20%22true%22%20else%20%22false%22%0A%0A%23eval%20test%20((A%20%E2%88%A7%20B)%20%E2%88%A8%20%C2%AC%20C)%0A%23eval%20test%20(A%20%E2%86%92%20D)%0A%23eval%20test%20(C%20%E2%86%92%20(D%20%E2%88%A8%20%C2%ACE))%0A%23eval%20test%20(%C2%AC(A%20%E2%88%A7%20B%20%E2%88%A7%20C%20%E2%88%A7%20D))" target="_blank">
 try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Define your truth assignment here</span>
 <span class="kd">def</span> <span class="n">A</span> <span class="o">:=</span> <span class="n">tt</span>
 <span class="kd">def</span> <span class="n">B</span> <span class="o">:=</span> <span class="n">ff</span>
@@ -211,7 +211,7 @@ have the same values for all truth assignments.</p></li>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">Logic and Proof</a></h1>
+<h1 class="logo"><a href="index.html">Logic and Mathematical Inquiry</a></h1>
 
 
 
@@ -258,7 +258,7 @@ have the same values for all truth assignments.</p></li>
 <hr />
 <ul>
     
-    <li class="toctree-l1"><a href="logic_and_proof.pdf">PDF version</a></li>
+    <li class="toctree-l1"><a href="logic_and_mathematical_inquiry.pdf">PDF version</a></li>
     
     <li class="toctree-l1"><a href="https://leanprover.github.io/">Lean Home</a></li>
     
