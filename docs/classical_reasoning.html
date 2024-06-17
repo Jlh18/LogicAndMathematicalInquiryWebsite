@@ -313,8 +313,10 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 <li><p>Put <span class="math notranslate nohighlight">\((A \vee B) \wedge (C \vee D) \wedge (E \vee F)\)</span> in disjunctive normal form, that is, write it as a big &#8220;or&#8221; of multiple &#8220;and&#8221; expressions.</p></li>
 <li><p>Prove <code class="docutils literal notranslate"><span class="pre">&#172;</span> <span class="pre">(A</span> <span class="pre">&#8743;</span> <span class="pre">B)</span> <span class="pre">&#8594;</span> <span class="pre">&#172;</span> <span class="pre">A</span> <span class="pre">&#8744;</span> <span class="pre">&#172;</span> <span class="pre">B</span></code> by replacing the sorry&#8217;s below by proofs.</p>
 <div style="position: relative">
-<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=section%0A%0Aopen%20Classical%0Avariable%20%7BA%20B%20C%20%3A%20Prop%7D%0A%0A--%20Prove%20%C2%AC%20(A%20%E2%88%A7%20B)%20%E2%86%92%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%20by%20replacing%20the%20sorry's%20below%0A--%20by%20proofs.%0A%0Alemma%20step1%20(h%E2%82%81%20%3A%20%C2%AC%20(A%20%E2%88%A7%20B))%20(h%E2%82%82%20%3A%20A)%20%3A%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%20%3A%3D%0Ahave%20%3A%20%C2%AC%20B%20%3A%3D%20sorry%0Ashow%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%20from%20Or.inr%20this%0A%0Alemma%20step2%20(h%E2%82%81%20%3A%20%C2%AC%20(A%20%E2%88%A7%20B))%20(h%E2%82%82%20%3A%20%C2%AC%20(%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B))%20%3A%20False%20%3A%3D%0Ahave%20%3A%20%C2%AC%20A%20%3A%3D%0A%20%20fun%20_%20%3A%20A%20%E2%86%A6%0A%20%20have%20%3A%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%20%3A%3D%20step1%20h%E2%82%81%20%E2%80%B9A%E2%80%BA%0A%20%20show%20False%20from%20h%E2%82%82%20this%0Ashow%20False%20from%20sorry%0A%0Atheorem%20step3%20(h%20%3A%20%C2%AC%20(A%20%E2%88%A7%20B))%20%3A%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%20%3A%3D%0AbyContradiction%0A%20%20(fun%20h'%20%3A%20%C2%AC%20(%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B)%20%E2%86%A6%0A%20%20%20%20show%20False%20from%20step2%20h%20h')%0A%0Aend" target="_blank">
-try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kn">section</span>
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=import%20Mathlib.Tactic%0A%0Asection%0A%0Aopen%20Classical%0Avariable%20%7BA%20B%20C%20%3A%20Prop%7D%0A%0A--%20Prove%20%C2%AC%20(A%20%E2%88%A7%20B)%20%E2%86%92%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%20by%20replacing%20the%20sorry's%20below%0A--%20by%20proofs.%0A%0Alemma%20step1%20(h%E2%82%81%20%3A%20%C2%AC%20(A%20%E2%88%A7%20B))%20(h%E2%82%82%20%3A%20A)%20%3A%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%20%3A%3D%0Ahave%20%3A%20%C2%AC%20B%20%3A%3D%20sorry%0Ashow%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%20from%20Or.inr%20this%0A%0Alemma%20step2%20(h%E2%82%81%20%3A%20%C2%AC%20(A%20%E2%88%A7%20B))%20(h%E2%82%82%20%3A%20%C2%AC%20(%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B))%20%3A%20False%20%3A%3D%0Ahave%20%3A%20%C2%AC%20A%20%3A%3D%0A%20%20fun%20_%20%3A%20A%20%E2%86%A6%0A%20%20have%20%3A%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%20%3A%3D%20step1%20h%E2%82%81%20%E2%80%B9A%E2%80%BA%0A%20%20show%20False%20from%20h%E2%82%82%20this%0Ashow%20False%20from%20sorry%0A%0Atheorem%20step3%20(h%20%3A%20%C2%AC%20(A%20%E2%88%A7%20B))%20%3A%20%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B%20%3A%3D%0AbyContradiction%0A%20%20(fun%20h'%20%3A%20%C2%AC%20(%C2%AC%20A%20%E2%88%A8%20%C2%AC%20B)%20%E2%86%A6%0A%20%20%20%20show%20False%20from%20step2%20h%20h')%0A%0Aend" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="n">Mathlib.Tactic</span>
+
+<span class="kn">section</span>
 
 <span class="kn">open</span> <span class="n">Classical</span>
 <span class="kd">variable</span> <span class="o">{</span><span class="n">A</span> <span class="n">B</span> <span class="n">C</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">}</span>
@@ -417,9 +419,9 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 <hr />
 <ul>
     
-    <li class="toctree-l1"><a href="logic_and_mathematical_inquiry.pdf">PDF version</a></li>
-    
     <li class="toctree-l1"><a href="https://leanprover.github.io/">Lean Home</a></li>
+    
+    <li class="toctree-l1"><a href="logic_and_mathematical_inquiry.pdf">PDF version</a></li>
     
 </ul>
 

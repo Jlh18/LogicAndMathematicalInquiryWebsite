@@ -14,28 +14,29 @@ For example, suppose we want to work with a first-order language with one consta
 
 .. code-block:: lean
 
-    constant U : Type
+    axiom U : Type
 
-    constant c : U
-    constant f : U → U
-    constant g : U → U → U
-    constant P : U → Prop
-    constant R : U → U → Prop
+    axiom c : U
+    axiom f : U → U
+    axiom g : U → U → U
+    axiom P : U → Prop
+    axiom R : U → U → Prop
 
 We can then use them as follows:
 
 .. code-block:: lean
 
-    constant U : Type
 
-    constant c : U
-    constant f : U → U
-    constant g : U → U → U
-    constant P : U → Prop
-    constant R : U → U → Prop
+    axiom U : Type
+
+    axiom c : U
+    axiom f : U → U
+    axiom g : U → U → U
+    axiom P : U → Prop
+    axiom R : U → U → Prop
 
     -- BEGIN
-    variables x y : U
+    variable (x y : U)
 
     #check c
     #check f c
@@ -55,19 +56,21 @@ Note all the following:
 -  A unary predicate is presented as an object of type ``U → Prop`` and a binary predicate is represented as an object of type ``U → U → Prop``. You can think of a binary relation ``R`` as being a function that assumes two arguments in the universe, ``U``, and returns a proposition.
 -  We write ``P x`` to denote the assertion that ``P`` holds of ``x``, and ``R x y`` to denote that ``R`` holds of ``x`` and ``y``.
 
-You may reasonably wonder what difference there is between a constant and a variable in Lean. The following declarations also work:
+You may reasonably wonder what difference there is between
+``axiom`` and ``variable`` in Lean.
+The following declarations also work:
 
 .. code-block:: lean
 
-    variable U : Type
+    variable (U : Type)
 
-    variable c : U
-    variable f : U → U
-    variable g : U → U → U
-    variable P : U → Prop
-    variable R : U → U → Prop
+    variable (c : U)
+    variable (f : U → U)
+    variable (g : U → U → U)
+    variable (P : U → Prop)
+    variable (R : U → U → Prop)
 
-    variables x y : U
+    variable (x y : U)
 
     #check c
     #check f c
@@ -77,54 +80,69 @@ You may reasonably wonder what difference there is between a constant and a vari
     #check P (g x (f c))
     #check R x y
 
-Although the examples function in much the same way, the ``constant`` and ``variable`` commands do very different things. The ``constant`` command declares a new object, axiomatically, and adds it to the list of objects Lean knows about. In contrast, when it is first executed, the ``variable`` command does not create anything. Rather, it tells Lean that whenever we enter an expression using the corresponding identifier, it should create a temporary variable of the corresponding type.
+Although the examples function in much the same way, the ``axiom`` and ``variable`` commands do very different things. The ``constant`` command declares a new object, axiomatically, and adds it to the list of objects Lean knows about. In contrast, when it is first executed, the ``variable`` command does not create anything. Rather, it tells Lean that whenever we enter an expression using the corresponding identifier, it should create a temporary variable of the corresponding type.
 
-Many types are already declared in Lean's standard library. For example, there is a type written ``nat`` or ``ℕ``, that denotes the natural numbers:
+Many types are already declared in Lean's standard library. For example, there is a type written ``Nat`` or ``ℕ``, that denotes the natural numbers.
 
 .. code-block:: lean
 
-    #check nat
+    -- BEGIN
+    import Mathlib.Data.Nat.Defs
+
+    #check Nat
     #check ℕ
+    -- END
 
 You can enter the unicode ``ℕ`` with ``\nat`` or ``\N``. The two expressions mean the same thing.
+To use this notation we imported the natural numbers module from Mathlib,
+the standard library for Lean.
+We could also introduce ``ℕ`` as notation ourselves, as we will do in the following.
 
 Using this built-in type, we can model the language of arithmetic, as described in the last chapter, as follows:
 
 .. code-block:: lean
 
+    -- BEGIN
     namespace hidden
+    notation:1 "ℕ" => Nat
 
-    constant mul : ℕ → ℕ → ℕ
-    constant add : ℕ → ℕ → ℕ
-    constant square : ℕ → ℕ
-    constant even : ℕ → Prop
-    constant odd : ℕ → Prop
-    constant prime : ℕ → Prop
-    constant divides : ℕ → ℕ → Prop
-    constant lt : ℕ → ℕ → Prop
-    constant zero : ℕ
-    constant one : ℕ
+    axiom mul : ℕ → ℕ → ℕ
+    axiom add : ℕ → ℕ → ℕ
+    axiom square : ℕ → ℕ
+    axiom even : ℕ → Prop
+    axiom odd : ℕ → Prop
+    axiom prime : ℕ → Prop
+    axiom divides : ℕ → ℕ → Prop
+    axiom lt : ℕ → ℕ → Prop
+    axiom zero : ℕ
+    axiom one : ℕ
 
     end hidden
+    -- END
 
 We have used the ``namespace`` command to avoid conflicts with identifiers that are already declared in the Lean library. (Outside the namespace, the constant ``mul`` we just declared is named ``hidden.mul``.) We can again use the ``#check`` command to try them out:
 
 .. code-block:: lean
 
     namespace hidden
+    notation:1 "ℕ" => Nat
 
-    constant mul : ℕ → ℕ → ℕ
-    constant add : ℕ → ℕ → ℕ
-    constant square : ℕ → ℕ
-    constant even : ℕ → Prop
-    constant odd : ℕ → Prop
-    constant prime : ℕ → Prop
-    constant divides : ℕ → ℕ → Prop
-    constant lt : ℕ → ℕ → Prop
-    constant zero : ℕ
-    constant one : ℕ
+    axiom mul : ℕ → ℕ → ℕ
+    axiom add : ℕ → ℕ → ℕ
+    axiom square : ℕ → ℕ
+    axiom even : ℕ → Prop
+    axiom odd : ℕ → Prop
+    axiom prime : ℕ → Prop
+    axiom divides : ℕ → ℕ → Prop
+    axiom lt : ℕ → ℕ → Prop
+    axiom zero : ℕ
+    axiom one : ℕ
+    end hidden
 
-    variables w x y z : ℕ
+    -- BEGIN
+    namespace hidden
+
+    variable (w x y z : ℕ)
 
     #check mul x y
     #check add x y
@@ -132,25 +150,27 @@ We have used the ``namespace`` command to avoid conflicts with identifiers that 
     #check even x
 
     end hidden
+    -- END
 
 We can even declare infix notation of binary operations and relations:
 
 .. code-block:: lean
 
     namespace hidden
+    notation:1 "ℕ" => Nat
 
-    constant mul : ℕ → ℕ → ℕ
-    constant add : ℕ → ℕ → ℕ
-    constant square : ℕ → ℕ
-    constant even : ℕ → Prop
-    constant odd : ℕ → Prop
-    constant prime : ℕ → Prop
-    constant divides : ℕ → ℕ → Prop
-    constant lt : ℕ → ℕ → Prop
-    constant zero : ℕ
-    constant one : ℕ
+    axiom mul : ℕ → ℕ → ℕ
+    axiom add : ℕ → ℕ → ℕ
+    axiom square : ℕ → ℕ
+    axiom even : ℕ → Prop
+    axiom odd : ℕ → Prop
+    axiom prime : ℕ → Prop
+    axiom divides : ℕ → ℕ → Prop
+    axiom lt : ℕ → ℕ → Prop
+    axiom zero : ℕ
+    axiom one : ℕ
 
-    variables w x y z : ℕ
+    variable (w x y z : ℕ)
 
     #check mul x y
     #check add x y
@@ -158,9 +178,9 @@ We can even declare infix notation of binary operations and relations:
     #check even x
 
     -- BEGIN
-    local infix + := add
-    local infix * := mul
-    local infix < := lt
+    local infix:65   " + " => add
+    local infix:70   " * " => mul
+    local infix:50   " < " => lt
     -- END
 
     end hidden
@@ -170,28 +190,29 @@ We can even declare infix notation of binary operations and relations:
 .. code-block:: lean
 
     namespace hidden
+    notation:1 "ℕ" => Nat
 
-    constant mul : ℕ → ℕ → ℕ
-    constant add : ℕ → ℕ → ℕ
-    constant square : ℕ → ℕ
-    constant even : ℕ → Prop
-    constant odd : ℕ → Prop
-    constant prime : ℕ → Prop
-    constant divides : ℕ → ℕ → Prop
-    constant lt : ℕ → ℕ → Prop
-    constant zero : ℕ
-    constant one : ℕ
+    axiom mul : ℕ → ℕ → ℕ
+    axiom add : ℕ → ℕ → ℕ
+    axiom square : ℕ → ℕ
+    axiom even : ℕ → Prop
+    axiom odd : ℕ → Prop
+    axiom prime : ℕ → Prop
+    axiom divides : ℕ → ℕ → Prop
+    axiom lt : ℕ → ℕ → Prop
+    axiom zero : ℕ
+    axiom one : ℕ
 
-    variables w x y z : ℕ
+    variable (w x y z : ℕ)
 
     #check mul x y
     #check add x y
     #check square x
     #check even x
 
-    local infix + := add
-    local infix * := mul
-    local infix < := lt
+    local infix:65   " + " => add
+    local infix:70   " * " => mul
+    local infix:50   " < " => lt
 
     -- BEGIN
     #check even (x + y + z) ∧ prime ((x + one) * y * y)
