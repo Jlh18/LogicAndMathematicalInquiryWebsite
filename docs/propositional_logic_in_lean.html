@@ -570,16 +570,31 @@ namely &#8220;term mode&#8221;.
 In term mode we can directly write proofs as syntactic expressions.
 In this section we introduce &#8220;tactic mode&#8221;,
 which allows us to write proofs more interactively,
-with tactics as commands to follow for building such a proof.
-Lean should be able to take a tactic mode proof and turn it into
-a proof term.
-Tactics can be very powerful tools,
+with tactics as instructions to follow for building such a proof.
+The statement to be proved at a given point is called the <em>goal</em>,
+and instructions make progress by transforming
+the goal into something that is easier to prove.
+Once the tactic mode proof is complete,
+Lean should be able to turn it into a proof term by following the instructions.</p>
+<p>Tactics can be very powerful tools,
 bearing much of the tedious work and
-allowing us to write much shorter proofs.</p>
-<p>We can enter tactic mode by writing the keyword <code class="docutils literal notranslate"><span class="pre">by</span></code>:</p>
+allowing us to write much shorter proofs.
+We will slowly introduce them as we go.</p>
+<p>We can enter tactic mode by writing the keyword <code class="docutils literal notranslate"><span class="pre">by</span></code> after <code class="docutils literal notranslate"><span class="pre">:=</span></code>:</p>
 <div style="position: relative">
-<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=example%20(A%20B%20C%20%3A%20Prop)%20%3A%20A%20%E2%88%A7%20(B%20%E2%88%A8%20C)%20%E2%86%92%20(A%20%E2%88%A7%20B)%20%E2%88%A8%20(A%20%E2%88%A7%20C)%20%3A%3D%20by%0A%20%20intro%20(h1%20%3A%20A%20%E2%88%A7%20(B%20%E2%88%A8%20C))%0A%20%20cases%20h1%20with%0A%20%20%7C%20intro%20h1%20h2%20%3D%3E%20cases%20h2%20with%0A%20%20%20%20%7C%20inl%20h2%20%3D%3E%0A%20%20%20%20%20%20apply%20Or.inl%0A%20%20%20%20%20%20apply%20And.intro%0A%20%20%20%20%20%20exact%20h1%0A%20%20%20%20%20%20exact%20h2%0A%20%20%20%20%7C%20inr%20h2%20%3D%3E%0A%20%20%20%20%20%20apply%20Or.inr%0A%20%20%20%20%20%20apply%20And.intro%0A%20%20%20%20%20%20exact%20h1%0A%20%20%20%20%20%20exact%20h2" target="_blank">
-try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">example</span> <span class="o">(</span><span class="n">A</span> <span class="n">B</span> <span class="n">C</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span> <span class="o">:</span> <span class="n">A</span> <span class="bp">&#8743;</span> <span class="o">(</span><span class="n">B</span> <span class="bp">&#8744;</span> <span class="n">C</span><span class="o">)</span> <span class="bp">&#8594;</span> <span class="o">(</span><span class="n">A</span> <span class="bp">&#8743;</span> <span class="n">B</span><span class="o">)</span> <span class="bp">&#8744;</span> <span class="o">(</span><span class="n">A</span> <span class="bp">&#8743;</span> <span class="n">C</span><span class="o">)</span> <span class="o">:=</span> <span class="kd">by</span>
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://live.lean-lang.org/#code=--%20term%20mode%0Aexample%20(A%20B%20C%20%3A%20Prop)%20%3A%20A%20%E2%88%A7%20(B%20%E2%88%A8%20C)%20%E2%86%92%20(A%20%E2%88%A7%20B)%20%E2%88%A8%20(A%20%E2%88%A7%20C)%20%3A%3D%0Afun%20h1%20%3A%20A%20%E2%88%A7%20(B%20%E2%88%A8%20C)%20%E2%86%A6%0AOr.elim%20(And.right%20h1)%0A%20%20(fun%20h2%20%3A%20B%20%E2%86%A6%0A%20%20%20%20show%20(A%20%E2%88%A7%20B)%20%E2%88%A8%20(A%20%E2%88%A7%20C)%20from%20Or.inl%20(And.intro%20(And.left%20h1)%20h2))%0A%20%20(fun%20h2%20%3A%20C%20%E2%86%A6%0A%20%20%20%20show%20(A%20%E2%88%A7%20B)%20%E2%88%A8%20(A%20%E2%88%A7%20C)%0A%20%20%20%20%20%20from%20Or.inr%20(And.intro%20(And.left%20h1)%20h2))%0A%0A--%20tactic%20mode%0Aexample%20(A%20B%20C%20%3A%20Prop)%20%3A%20A%20%E2%88%A7%20(B%20%E2%88%A8%20C)%20%E2%86%92%20(A%20%E2%88%A7%20B)%20%E2%88%A8%20(A%20%E2%88%A7%20C)%20%3A%3D%20by%0A%20%20intro%20(h1%20%3A%20A%20%E2%88%A7%20(B%20%E2%88%A8%20C))%0A%20%20cases%20h1%20with%0A%20%20%7C%20intro%20h1%20h2%20%3D%3E%20cases%20h2%20with%0A%20%20%20%20%7C%20inl%20h2%20%3D%3E%0A%20%20%20%20%20%20apply%20Or.inl%0A%20%20%20%20%20%20apply%20And.intro%0A%20%20%20%20%20%20exact%20h1%0A%20%20%20%20%20%20exact%20h2%0A%20%20%20%20%7C%20inr%20h2%20%3D%3E%0A%20%20%20%20%20%20apply%20Or.inr%0A%20%20%20%20%20%20apply%20And.intro%0A%20%20%20%20%20%20exact%20h1%0A%20%20%20%20%20%20exact%20h2" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="c1">-- term mode</span>
+<span class="kd">example</span> <span class="o">(</span><span class="n">A</span> <span class="n">B</span> <span class="n">C</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span> <span class="o">:</span> <span class="n">A</span> <span class="bp">&#8743;</span> <span class="o">(</span><span class="n">B</span> <span class="bp">&#8744;</span> <span class="n">C</span><span class="o">)</span> <span class="bp">&#8594;</span> <span class="o">(</span><span class="n">A</span> <span class="bp">&#8743;</span> <span class="n">B</span><span class="o">)</span> <span class="bp">&#8744;</span> <span class="o">(</span><span class="n">A</span> <span class="bp">&#8743;</span> <span class="n">C</span><span class="o">)</span> <span class="o">:=</span>
+<span class="k">fun</span> <span class="n">h1</span> <span class="o">:</span> <span class="n">A</span> <span class="bp">&#8743;</span> <span class="o">(</span><span class="n">B</span> <span class="bp">&#8744;</span> <span class="n">C</span><span class="o">)</span> <span class="bp">&#8614;</span>
+<span class="n">Or.elim</span> <span class="o">(</span><span class="n">And.right</span> <span class="n">h1</span><span class="o">)</span>
+  <span class="o">(</span><span class="k">fun</span> <span class="n">h2</span> <span class="o">:</span> <span class="n">B</span> <span class="bp">&#8614;</span>
+    <span class="k">show</span> <span class="o">(</span><span class="n">A</span> <span class="bp">&#8743;</span> <span class="n">B</span><span class="o">)</span> <span class="bp">&#8744;</span> <span class="o">(</span><span class="n">A</span> <span class="bp">&#8743;</span> <span class="n">C</span><span class="o">)</span> <span class="k">from</span> <span class="n">Or.inl</span> <span class="o">(</span><span class="n">And.intro</span> <span class="o">(</span><span class="n">And.left</span> <span class="n">h1</span><span class="o">)</span> <span class="n">h2</span><span class="o">))</span>
+  <span class="o">(</span><span class="k">fun</span> <span class="n">h2</span> <span class="o">:</span> <span class="n">C</span> <span class="bp">&#8614;</span>
+    <span class="k">show</span> <span class="o">(</span><span class="n">A</span> <span class="bp">&#8743;</span> <span class="n">B</span><span class="o">)</span> <span class="bp">&#8744;</span> <span class="o">(</span><span class="n">A</span> <span class="bp">&#8743;</span> <span class="n">C</span><span class="o">)</span>
+      <span class="k">from</span> <span class="n">Or.inr</span> <span class="o">(</span><span class="n">And.intro</span> <span class="o">(</span><span class="n">And.left</span> <span class="n">h1</span><span class="o">)</span> <span class="n">h2</span><span class="o">))</span>
+
+<span class="c1">-- tactic mode</span>
+<span class="kd">example</span> <span class="o">(</span><span class="n">A</span> <span class="n">B</span> <span class="n">C</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span> <span class="o">:</span> <span class="n">A</span> <span class="bp">&#8743;</span> <span class="o">(</span><span class="n">B</span> <span class="bp">&#8744;</span> <span class="n">C</span><span class="o">)</span> <span class="bp">&#8594;</span> <span class="o">(</span><span class="n">A</span> <span class="bp">&#8743;</span> <span class="n">B</span><span class="o">)</span> <span class="bp">&#8744;</span> <span class="o">(</span><span class="n">A</span> <span class="bp">&#8743;</span> <span class="n">C</span><span class="o">)</span> <span class="o">:=</span> <span class="kd">by</span>
   <span class="n">intro</span> <span class="o">(</span><span class="n">h1</span> <span class="o">:</span> <span class="n">A</span> <span class="bp">&#8743;</span> <span class="o">(</span><span class="n">B</span> <span class="bp">&#8744;</span> <span class="n">C</span><span class="o">))</span>
   <span class="n">cases</span> <span class="n">h1</span> <span class="k">with</span>
   <span class="bp">|</span> <span class="n">intro</span> <span class="n">h1</span> <span class="n">h2</span> <span class="bp">=&gt;</span> <span class="n">cases</span> <span class="n">h2</span> <span class="k">with</span>
@@ -597,13 +612,23 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 </div>
 </div><p>Instead of <code class="docutils literal notranslate"><span class="pre">fun</span> <span class="pre">h1</span> <span class="pre">&#8614;</span> <span class="pre">h2</span></code> we use <code class="docutils literal notranslate"><span class="pre">intro</span> <span class="pre">(h1</span> <span class="pre">:</span> <span class="pre">A</span> <span class="pre">&#8743;</span> <span class="pre">(B</span> <span class="pre">&#8744;</span> <span class="pre">C))</span></code>
 to &#8220;introduce&#8221; the assumption <code class="docutils literal notranslate"><span class="pre">h1</span></code>,
-then give instructions for <code class="docutils literal notranslate"><span class="pre">h2</span></code>.
-Instead of <code class="docutils literal notranslate"><span class="pre">Or.elim</span> <span class="pre">h</span></code> and <code class="docutils literal notranslate"><span class="pre">And.elim</span> <span class="pre">h</span></code> we use <code class="docutils literal notranslate"><span class="pre">cases</span> <span class="pre">h</span> <span class="pre">with</span></code>
-and use <code class="docutils literal notranslate"><span class="pre">|</span></code> to list the cases that occur,
-proving a proof in each case.
-Instead of immediately supplying <code class="docutils literal notranslate"><span class="pre">Or.inl</span></code>, <code class="docutils literal notranslate"><span class="pre">Or.inr</span></code> and <code class="docutils literal notranslate"><span class="pre">And.intro</span></code>
+then give instructions for <code class="docutils literal notranslate"><span class="pre">h2</span></code>.</p>
+<p>Instead of <code class="docutils literal notranslate"><span class="pre">Or.elim</span> <span class="pre">h</span></code> and <code class="docutils literal notranslate"><span class="pre">And.elim</span> <span class="pre">h</span></code> we use <code class="docutils literal notranslate"><span class="pre">cases</span> <span class="pre">h</span> <span class="pre">with</span></code>
+and use <code class="docutils literal notranslate"><span class="pre">|</span></code> to list the possible cases in which the proof <code class="docutils literal notranslate"><span class="pre">h</span></code> was made,
+then continuing the proof in each case.
+For conjunction, there is only one possible way in which <code class="docutils literal notranslate"><span class="pre">h</span></code> was made,
+which is by <code class="docutils literal notranslate"><span class="pre">And.intro</span> <span class="pre">h1</span> <span class="pre">h2</span></code> (Lean only allows <code class="docutils literal notranslate"><span class="pre">intro</span> <span class="pre">h1</span> <span class="pre">h2</span></code>).
+For disjunction there are two cases,
+<code class="docutils literal notranslate"><span class="pre">h</span></code> could be either <code class="docutils literal notranslate"><span class="pre">Or.inl</span> <span class="pre">h1</span></code> or <code class="docutils literal notranslate"><span class="pre">Or.inr</span> <span class="pre">h2</span></code>
+(again we must write <code class="docutils literal notranslate"><span class="pre">inl</span> <span class="pre">h1</span></code> and <code class="docutils literal notranslate"><span class="pre">inr</span> <span class="pre">h2</span></code>).</p>
+<p>Instead of immediately supplying <code class="docutils literal notranslate"><span class="pre">Or.inl</span></code>, <code class="docutils literal notranslate"><span class="pre">Or.inr</span></code> and <code class="docutils literal notranslate"><span class="pre">And.intro</span></code>
 with all its arguments we can (for example) <code class="docutils literal notranslate"><span class="pre">apply</span> <span class="pre">Or.inl</span></code> and
 fill in the missing parts afterwards.
+In fact, Lean sees <code class="docutils literal notranslate"><span class="pre">Or.inl</span> <span class="pre">:</span> <span class="pre">A</span> <span class="pre">&#8594;</span> <span class="pre">A</span> <span class="pre">&#8744;</span> <span class="pre">B</span></code> as a proof of a conditional,
+and for any <code class="docutils literal notranslate"><span class="pre">h</span> <span class="pre">:</span> <span class="pre">A</span> <span class="pre">&#8594;</span> <span class="pre">B</span></code>,
+<code class="docutils literal notranslate"><span class="pre">apply</span> <span class="pre">h</span></code> will change the goal from <code class="docutils literal notranslate"><span class="pre">B</span></code> to <code class="docutils literal notranslate"><span class="pre">A</span></code>.
+We can see this as &#8220;since <code class="docutils literal notranslate"><span class="pre">A</span></code> implies <code class="docutils literal notranslate"><span class="pre">B</span></code>, in order to prove <code class="docutils literal notranslate"><span class="pre">B</span></code>
+it suffices to prove <code class="docutils literal notranslate"><span class="pre">A</span></code>&#8221;.
 Finally, when our goal is <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">h1</span> <span class="pre">:</span> <span class="pre">A</span></code> we can close the goal
 by writing <code class="docutils literal notranslate"><span class="pre">exact</span> <span class="pre">A</span></code>.</p>
 <p>We will mix tactics and terms in order to suit our needs.
@@ -1065,9 +1090,9 @@ try it!</a></div><div class="highlight-lean notranslate"><div class="highlight">
 <hr />
 <ul>
     
-    <li class="toctree-l1"><a href="https://leanprover.github.io/">Lean Home</a></li>
-    
     <li class="toctree-l1"><a href="logic_and_mathematical_inquiry.pdf">PDF version</a></li>
+    
+    <li class="toctree-l1"><a href="https://leanprover.github.io/">Lean Home</a></li>
     
 </ul>
 

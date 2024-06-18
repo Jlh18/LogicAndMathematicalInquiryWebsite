@@ -794,17 +794,33 @@ namely "term mode".
 In term mode we can directly write proofs as syntactic expressions.
 In this section we introduce "tactic mode",
 which allows us to write proofs more interactively,
-with tactics as commands to follow for building such a proof.
-Lean should be able to take a tactic mode proof and turn it into
-a proof term.
+with tactics as instructions to follow for building such a proof.
+The statement to be proved at a given point is called the *goal*,
+and instructions make progress by transforming
+the goal into something that is easier to prove.
+Once the tactic mode proof is complete,
+Lean should be able to turn it into a proof term by following the instructions.
+
 Tactics can be very powerful tools,
 bearing much of the tedious work and
 allowing us to write much shorter proofs.
+We will slowly introduce them as we go.
 
-We can enter tactic mode by writing the keyword ``by``:
+We can enter tactic mode by writing the keyword ``by`` after ``:=``:
 
 .. code-block:: lean
 
+    -- term mode
+    example (A B C : Prop) : A ∧ (B ∨ C) → (A ∧ B) ∨ (A ∧ C) :=
+    fun h1 : A ∧ (B ∨ C) ↦
+    Or.elim (And.right h1)
+      (fun h2 : B ↦
+        show (A ∧ B) ∨ (A ∧ C) from Or.inl (And.intro (And.left h1) h2))
+      (fun h2 : C ↦
+        show (A ∧ B) ∨ (A ∧ C)
+          from Or.inr (And.intro (And.left h1) h2))
+
+    -- tactic mode
     example (A B C : Prop) : A ∧ (B ∨ C) → (A ∧ B) ∨ (A ∧ C) := by
       intro (h1 : A ∧ (B ∨ C))
       cases h1 with
@@ -823,12 +839,24 @@ We can enter tactic mode by writing the keyword ``by``:
 Instead of ``fun h1 ↦ h2`` we use ``intro (h1 : A ∧ (B ∨ C))``
 to "introduce" the assumption ``h1``,
 then give instructions for ``h2``.
+
 Instead of ``Or.elim h`` and ``And.elim h`` we use ``cases h with``
-and use ``|`` to list the cases that occur,
-proving a proof in each case.
+and use ``|`` to list the possible cases in which the proof ``h`` was made,
+then continuing the proof in each case.
+For conjunction, there is only one possible way in which ``h`` was made,
+which is by ``And.intro h1 h2`` (Lean only allows ``intro h1 h2``).
+For disjunction there are two cases,
+``h`` could be either ``Or.inl h1`` or ``Or.inr h2``
+(again we must write ``inl h1`` and ``inr h2``).
+
 Instead of immediately supplying ``Or.inl``, ``Or.inr`` and ``And.intro``
 with all its arguments we can (for example) ``apply Or.inl`` and
 fill in the missing parts afterwards.
+In fact, Lean sees ``Or.inl : A → A ∨ B`` as a proof of a conditional,
+and for any ``h : A → B``,
+``apply h`` will change the goal from ``B`` to ``A``.
+We can see this as "since ``A`` implies ``B``, in order to prove ``B``
+it suffices to prove ``A``".
 Finally, when our goal is ``A`` and ``h1 : A`` we can close the goal
 by writing ``exact A``.
 
